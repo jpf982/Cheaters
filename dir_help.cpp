@@ -5,6 +5,10 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 using namespace std;
 
@@ -35,22 +39,40 @@ int main(int argc, char** argv)
     files.erase(files.begin());
     files.erase(files.begin());
 
-  /*for (unsigned int i = 0;i < files.size();i++) {
+  for (unsigned int i = 0;i < files.size();i++) {  //  debug loop to make sure all text file names were correctly put into files vector
         cout << i << files[i] << endl;
     }
-    return 0;
-  */
+    //return 0;
+  
 
     ifstream myfile;
-    string path = "/" + string(argv[1]) + files[1];
-    cout << path << endl;
-    myfile.open(path);
-    if(!myfile.is_open()) {
-        cout << "error opening file" << endl;
-        return -1;
-    }
-    string word;
-    while(myfile >> word) {
-        cout << word << endl;
+    for(int i = 0; i < 1; i++){
+        string path = string(argv[1]) + string(files[i]);
+        cout << path << endl; // debug line to make sure the correct path to the text files  is assigned to the path string
+        myfile.open(path.c_str());
+        if(!myfile.is_open()) {
+            cout << "error opening file" << endl;
+            return -1;
+        }
+        string word;
+        vector<string> words = vector<string>(6);
+        int count = 0;
+        int wordCount = 0;
+        while(myfile >> word) {
+            wordCount++;
+            if(count < atoi(argv[2])){
+                words.push_back(word);
+                count++;
+            }
+            else{
+                string wordChunk = "";
+                for(int i = 0; i < words.size(); i++){
+                    wordChunk = wordChunk + words[i];
+                }
+                cout << wordChunk << endl; // debug to see if chunks are correct
+                words.erase(words.begin());
+                words.push_back(word);
+            }
+        }
     }
 }
