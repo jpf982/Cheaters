@@ -46,7 +46,7 @@ int main(int argc, char** argv)
   
 
     ifstream myfile;
-    for(int i = 0; i < 1; i++){
+    for(int i = 0; i < files.size(); i++){
         string path = string(argv[1]) + string(files[i]);
         cout << path << endl; // debug line to make sure the correct path to the text files  is assigned to the path string
         myfile.open(path.c_str());
@@ -66,9 +66,10 @@ int main(int argc, char** argv)
             }
             else{
                 string wordChunk = "";
-                for(int i = 0; i < words.size(); i++){
+                for(int i = 0; i < count; i++){
                     wordChunk = wordChunk + words[i];
                 }
+                
                 cout << wordChunk << endl; // debug to see if chunks are correct
                 words.erase(words.begin());
                 words.push_back(word);
